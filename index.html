@@ -260,6 +260,48 @@
     </section>
   </div>
 
+  <!-- ── Agent Copilot Toggle ── -->
+  <button class="copilot-toggle" id="copilotToggle" aria-label="Open Agent Copilot">
+    <span class="copilot-toggle-icon">✦</span>
+    <span class="copilot-toggle-label">Agent Copilot</span>
+  </button>
+
+  <!-- ── Agent Copilot Sidebar ── -->
+  <aside class="copilot-sidebar" id="copilotSidebar" aria-label="Agent Copilot">
+    <div class="copilot-header">
+      <div class="copilot-header-left">
+        <span class="copilot-icon">✦</span>
+        <span class="copilot-title">Agent Copilot</span>
+        <span class="copilot-listening" id="copilotListening">
+          <span class="pulse-dot"></span> Listening
+        </span>
+      </div>
+      <button class="copilot-close" id="copilotClose" aria-label="Close copilot">✕</button>
+    </div>
+
+    <div class="copilot-feed-label">Live Insights</div>
+    <div class="copilot-feed" id="copilotFeed">
+      <div class="copilot-empty" id="copilotEmpty">
+        <div class="copilot-spinner"></div>
+        <p>Analyzing call data…</p>
+      </div>
+    </div>
+
+    <div class="copilot-chat">
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-quick-btns" id="chatQuickBtns">
+        <button class="quick-btn" data-q="Is there an active warranty?">Warranty?</button>
+        <button class="quick-btn" data-q="Any pending recalls?">Recalls?</button>
+        <button class="quick-btn" data-q="Best upsell offer?">Best upsell?</button>
+        <button class="quick-btn" data-q="Any open opportunities or leads?">Leads?</button>
+      </div>
+      <div class="chat-input-row">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Ask a question or inquiry…" autocomplete="off" />
+        <button class="chat-send" id="chatSend" aria-label="Send">&#10148;</button>
+      </div>
+    </div>
+  </aside>
+
   <script src="app.js"></script>
 </body>
 </html>

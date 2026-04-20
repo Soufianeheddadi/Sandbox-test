@@ -564,3 +564,165 @@ detailTabs.forEach((tab) => {
 });
 
 showStatus("Call received. Start in Service or switch to Sales.");
+
+// ═══════════════════════════════════════════
+// Agent Copilot Sidebar
+// ═══════════════════════════════════════════
+
+const copilotToggle   = document.getElementById("copilotToggle");
+const copilotSidebar  = document.getElementById("copilotSidebar");
+const copilotClose    = document.getElementById("copilotClose");
+const copilotFeed     = document.getElementById("copilotFeed");
+const copilotEmpty    = document.getElementById("copilotEmpty");
+const chatMessages    = document.getElementById("chatMessages");
+const chatInput       = document.getElementById("chatInput");
+const chatSend        = document.getElementById("chatSend");
+
+// ── Auto-generated live insights ──────────────────────────
+const copilotInsights = [
+  {
+    tag: "Customer Profile",
+    color: "#4a9cbd",
+    text: "Nasser Al Kuwari — customer since 2021, 3 vehicles registered. Loyalty tier: Gold. Avg. yearly spend: QAR 12,400."
+  },
+  {
+    tag: "Vehicle Alert",
+    color: "#e8844a",
+    text: "Tahoe 2024 LT Z71 is overdue for the 40,000 KM major service. Last recorded mileage: 41,820 KM (14 Apr 2026). Preferred advisor: Khalid Al Rashid."
+  },
+  {
+    tag: "Open Opportunity",
+    color: "#a07be0",
+    text: "Active opportunity for Chevrolet Traverse RS in Negotiation stage — assigned to Maya Hassan. Opened 17/04/2026."
+  },
+  {
+    tag: "Active Promotion",
+    color: "#4dbb85",
+    text: "Eligible for the 'Summer Ready' AC Service Package — 15% discount until 30 April 2026. Mention this to the customer."
+  },
+  {
+    tag: "AI Recommendation",
+    color: "#f0c040",
+    text: "Suggest booking the 40K major service today and bundle it with the AC package. Leverage the open Traverse RS opportunity — offer a test drive during the same visit."
+  }
+];
+
+// ── Chat canned responses (keyword-matched) ───────────────
+const chatResponses = [
+  {
+    keywords: ["warrant"],
+    reply: "2024 Chevrolet Tahoe LT Z71 is covered under the standard 3-year / 60,000 KM bumper-to-bumper warranty. Estimated expiry: March 2027 or 60,000 KM — whichever comes first."
+  },
+  {
+    keywords: ["recall"],
+    reply: "No open safety recalls on file for VIN 1GNSKPKD8PR281445 as of today (20 April 2026)."
+  },
+  {
+    keywords: ["upsell", "offer", "promo", "promotion", "package", "bundle"],
+    reply: "Top upsell opportunities: Brake Fluid Flush + Cabin Air Filter bundle (QAR 450) due at 40K service. Also eligible for Summer Ready AC package (15% off, expires 30 Apr). Recommend Khalid Al Rashid as advisor."
+  },
+  {
+    keywords: ["service", "appointment", "book", "schedule", "visit"],
+    reply: "Vehicle is overdue for the 40,000 KM major service (current: 41,820 KM). Morning slots available this week at Al Sadd branch. Preferred advisor: Khalid Al Rashid."
+  },
+  {
+    keywords: ["lead", "opportunity", "sales", "traverse", "test drive"],
+    reply: "Open Traverse RS opportunity is in Negotiation stage with Maya Hassan. Customer showed strong interest in the RS trim. Recommend scheduling a test drive — ideally combined with the 40K service visit."
+  },
+  {
+    keywords: ["customer", "profile", "history", "loyal", "gold"],
+    reply: "Nasser Al Kuwari — Gold tier customer since 2021. 3 registered vehicles, 6 service visits total. Average spend: QAR 12,400/year. Preferred contact method: Phone. Preferred time: Morning."
+  },
+  {
+    keywords: ["mileage", "km", "odometer", "kilometer"],
+    reply: "Last recorded mileage: 41,820 KM on 14 April 2026 (last service visit). The vehicle is overdue for the scheduled 40K major service."
+  },
+  {
+    keywords: ["ac", "air", "cool", "summer"],
+    reply: "Customer's AC performance was checked on 22/09/2025 at 34,100 KM. The Summer Ready AC package (QAR 320 after 15% promo discount) covers a full AC service + refrigerant top-up + cabin filter. Offer expires 30 April 2026."
+  },
+  {
+    keywords: ["advisor", "who", "assign", "contact"],
+    reply: "Customer's preferred service advisor is Khalid Al Rashid (Al Sadd branch). For sales, Maya Hassan is the assigned rep handling the open Traverse RS opportunity."
+  }
+];
+
+const defaultCopilotReply = "I'm cross-referencing the CRM and vehicle records. Could you be more specific? You can also use the quick-action buttons above.";
+
+let copilotOpen   = false;
+let feedStarted   = false;
+
+function toggleCopilot() {
+  copilotOpen = !copilotOpen;
+  copilotSidebar.classList.toggle("open", copilotOpen);
+  document.body.classList.toggle("copilot-open", copilotOpen);
+  if (copilotOpen && !feedStarted) {
+    feedStarted = true;
+    startCopilotFeed();
+  }
+}
+
+function startCopilotFeed() {
+  let delay = 900;
+  copilotInsights.forEach((insight, i) => {
+    setTimeout(() => {
+      if (i === 0 && copilotEmpty) copilotEmpty.remove();
+      const card = document.createElement("div");
+      card.className = "insight-card";
+      card.style.setProperty("--insight-color", insight.color);
+      card.innerHTML = `<p class="insight-tag">${insight.tag}</p><p class="insight-text">${insight.text}</p>`;
+      copilotFeed.appendChild(card);
+      copilotFeed.scrollTop = copilotFeed.scrollHeight;
+    }, delay);
+    delay += 1900;
+  });
+}
+
+function sendCopilotMessage(text) {
+  text = text.trim();
+  if (!text) return;
+
+  // User bubble
+  const userMsg = document.createElement("div");
+  userMsg.className = "chat-msg user";
+  userMsg.textContent = text;
+  chatMessages.appendChild(userMsg);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  chatInput.value = "";
+
+  // Typing indicator
+  const typing = document.createElement("div");
+  typing.className = "chat-msg typing";
+  typing.textContent = "Copilot is thinking…";
+  chatMessages.appendChild(typing);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // Find a matching response
+  const lower = text.toLowerCase();
+  let reply = defaultCopilotReply;
+  for (const r of chatResponses) {
+    if (r.keywords.some((k) => lower.includes(k))) {
+      reply = r.reply;
+      break;
+    }
+  }
+
+  setTimeout(() => {
+    typing.remove();
+    const botMsg = document.createElement("div");
+    botMsg.className = "chat-msg bot";
+    botMsg.textContent = reply;
+    chatMessages.appendChild(botMsg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }, 1100);
+}
+
+copilotToggle.addEventListener("click", toggleCopilot);
+copilotClose.addEventListener("click", toggleCopilot);
+chatSend.addEventListener("click", () => sendCopilotMessage(chatInput.value));
+chatInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") sendCopilotMessage(chatInput.value);
+});
+document.querySelectorAll(".quick-btn").forEach((btn) => {
+  btn.addEventListener("click", () => sendCopilotMessage(btn.dataset.q));
+});
