@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Call Center Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-shape bg-shape-a"></div>
+  <div class="bg-shape bg-shape-b"></div>
+
+  <main class="app-shell">
+    <header class="call-topbar">
+      <div class="topbar-title-wrap">
+        <p class="eyebrow">Incoming Call</p>
+        <h1>Customer Snapshot</h1>
+      </div>
+      <div class="badge">Queue: Chevrolet Service Line</div>
+      <section class="customer-grid">
+        <article>
+          <p class="label">Customer Name</p>
+          <p class="value" id="custName">Nasser Al Kuwari</p>
+        </article>
+        <article>
+          <p class="label">Number</p>
+          <p class="value" id="custNumber">+974 5551 0082</p>
+        </article>
+        <article>
+          <p class="label">VIN</p>
+          <p class="value" id="custVin">1GNSKPKD8PR281445</p>
+        </article>
+        <article>
+          <p class="label">Plate Number</p>
+          <p class="value" id="custPlate">QTR-76214</p>
+        </article>
+        <article>
+          <p class="label">Car</p>
+          <p class="value" id="custCar">Chevrolet Tahoe</p>
+        </article>
+        <article>
+          <p class="label">Car Model</p>
+          <p class="value" id="custModel">2024 LT Z71</p>
+        </article>
+      </section>
+    </header>
+
+    <section class="branch-picker">
+      <button class="big-action" data-branch="service">Service</button>
+      <button class="big-action" data-branch="sales">Sales</button>
+    </section>
+
+    <section class="panel" id="servicePanel" hidden>
+      <div class="panel-header">
+        <h2>Service Actions</h2>
+      </div>
+      <div class="panel-actions">
+        <button class="action-btn" id="bookAppointmentBtn">Book Appointment</button>
+        <button class="action-btn ghost" id="serviceOtherBtn">Other</button>
+      </div>
+    </section>
+
+    <section class="panel" id="salesPanel" hidden>
+      <div class="panel-header sales-header">
+        <h2>Sales Actions</h2>
+        <label class="toggle-wrap" for="isNewCustomer">
+          <input type="checkbox" id="isNewCustomer" />
+          <span>New customer</span>
+        </label>
+      </div>
+      <div class="panel-actions">
+        <button class="action-btn" id="createLeadBtn">Create Lead</button>
+        <button class="action-btn ghost" id="salesOtherBtn">Other</button>
+      </div>
+    </section>
+
+    <p class="status-banner" id="statusBanner" hidden></p>
+  </main>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <section class="modal" id="bookModal" hidden>
+      <button class="close-modal" data-close="bookModal" aria-label="Close">x</button>
+      <h3>Book Service Appointment</h3>
+      <p class="modal-note">Select a date, then choose an available hour from the daily schedule.</p>
+      <form id="bookForm">
+        <div class="form-row">
+          <label for="serviceDate">Date</label>
+          <input type="date" id="serviceDate" required />
+        </div>
+        <div class="calendar-legend">
+          <span><i class="dot available"></i> Available</span>
+          <span><i class="dot booked"></i> Booked</span>
+          <span><i class="dot selected"></i> Selected</span>
+        </div>
+        <div class="hourly-calendar" id="timeSlots" hidden></div>
+
+        <div id="availabilityResult" class="availability-box" hidden></div>
+
+        <div id="serviceDetails" hidden>
+          <div class="form-row">
+            <label for="serviceType">Service Type</label>
+            <select id="serviceType">
+              <option value="">Select service type</option>
+              <option>Oil & Filter Change</option>
+              <option>40,000 KM Major Service</option>
+              <option>Brake Inspection</option>
+              <option>AC Performance Check</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="mileage">Current Mileage</label>
+            <input type="number" id="mileage" min="0" step="1" placeholder="e.g., 42150" />
+          </div>
+          <button class="action-btn small" type="submit">Confirm Booking</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="modal" id="existingLeadModal" hidden>
+      <button class="close-modal" data-close="existingLeadModal" aria-label="Close">x</button>
+      <h3>Existing Lead Found</h3>
+      <p class="modal-note">This customer already has an active sales lead.</p>
+      <div class="lead-summary">
+        <p><strong>Lead ID:</strong> L-CHV-20419</p>
+        <p><strong>Status:</strong> Contacted - Follow up scheduled</p>
+        <p><strong>Model Interest:</strong> Chevrolet Traverse RS</p>
+        <p><strong>Sales Rep:</strong> Maya Hassan</p>
+      </div>
+      <button class="action-btn small" data-close="existingLeadModal">Close</button>
+    </section>
+
+    <section class="modal" id="createLeadModal" hidden>
+      <button class="close-modal" data-close="createLeadModal" aria-label="Close">x</button>
+      <h3>Create New Lead</h3>
+      <p class="modal-note">Fill customer details, then choose the lead outcome.</p>
+      <form id="leadForm">
+        <div class="form-row">
+          <label for="leadName">Customer Name</label>
+          <input type="text" id="leadName" value="Fahad Al Marri" required />
+        </div>
+        <div class="form-row">
+          <label for="leadPhone">Phone Number</label>
+          <input type="tel" id="leadPhone" value="+974 6670 1138" required />
+        </div>
+        <div class="form-row">
+          <label for="leadEmail">Email</label>
+          <input type="email" id="leadEmail" value="fahad.marri@example.com" required />
+        </div>
+        <div class="form-row">
+          <label for="leadInterest">Interested In</label>
+          <select id="leadInterest" required>
+            <option>Chevrolet Tahoe</option>
+            <option>Chevrolet Silverado</option>
+            <option>Chevrolet Traverse</option>
+          </select>
+        </div>
+
+        <div class="outcome-actions">
+          <button class="action-btn small" type="button" id="convertBtn">Convert to Opportunity</button>
+          <button class="action-btn small ghost" type="button" id="unqualifiedBtn">Unqualified</button>
+        </div>
+
+        <div class="form-row" id="opportunityTypeRow" hidden>
+          <label for="opportunityType">Opportunity Type</label>
+          <select id="opportunityType">
+            <option value="">Select next step</option>
+            <option>Test Drive</option>
+            <option>Showroom Visit</option>
+            <option>Sales Consultation Call</option>
+            <option>Trade-In Evaluation</option>
+            <option>Finance Discussion</option>
+          </select>
+        </div>
+
+        <div class="form-row" id="unqualifiedRow" hidden>
+          <label for="unqualifiedReason">Unqualified Reason</label>
+          <select id="unqualifiedReason">
+            <option value="">Select reason</option>
+            <option>Budget constraints</option>
+            <option>Not interested right now</option>
+            <option>Competitor selected</option>
+            <option>Invalid contact details</option>
+          </select>
+        </div>
+
+        <button class="action-btn small" type="submit">Save Lead</button>
+      </form>
+    </section>
+
+    <section class="modal" id="smsModal" hidden>
+      <button class="close-modal" data-close="smsModal" aria-label="Close">x</button>
+      <h3 id="smsModalTitle">Appointment SMS Preview</h3>
+      <p class="modal-note" id="smsModalNote">Review the message that will be sent to the customer, then confirm.</p>
+      <div class="sms-preview" id="smsPreview"></div>
+      <div class="outcome-actions">
+        <button class="action-btn small" id="sendSmsBtn" type="button">Send SMS</button>
+        <button class="action-btn small ghost" data-close="smsModal" type="button">Cancel</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
