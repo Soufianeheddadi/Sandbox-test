@@ -177,35 +177,22 @@
       </form>
     </section>
 
-    <section class="modal" id="existingLeadModal" hidden>
-      <button class="close-modal" data-close="existingLeadModal" aria-label="Close">x</button>
-      <h3>Existing Lead Found</h3>
-      <p class="modal-note">This customer already has an active sales lead.</p>
-      <div class="lead-summary">
-        <p><strong>Lead ID:</strong> L-CHV-20419</p>
-        <p><strong>Status:</strong> Contacted - Follow up scheduled</p>
-        <p><strong>Model Interest:</strong> Chevrolet Traverse RS</p>
-        <p><strong>Sales Rep:</strong> Maya Hassan</p>
-      </div>
-      <button class="action-btn small" data-close="existingLeadModal">Close</button>
-    </section>
-
     <section class="modal" id="createLeadModal" hidden>
       <button class="close-modal" data-close="createLeadModal" aria-label="Close">x</button>
-      <h3>Create New Lead</h3>
-      <p class="modal-note">Fill customer details, then choose the lead outcome.</p>
+      <h3 id="leadModalTitle">Create New Lead</h3>
+      <p class="modal-note" id="leadModalNote">Fill in the customer details, then choose the lead outcome.</p>
       <form id="leadForm">
         <div class="form-row">
           <label for="leadName">Customer Name</label>
-          <input type="text" id="leadName" value="Fahad Al Marri" required />
+          <input type="text" id="leadName" placeholder="e.g. Nasser Al Kuwari" required />
         </div>
         <div class="form-row">
           <label for="leadPhone">Phone Number</label>
-          <input type="tel" id="leadPhone" value="+974 6670 1138" required />
+          <input type="tel" id="leadPhone" placeholder="e.g. +974 5551 0082" required />
         </div>
         <div class="form-row">
           <label for="leadEmail">Email</label>
-          <input type="email" id="leadEmail" value="fahad.marri@example.com" required />
+          <input type="email" id="leadEmail" placeholder="e.g. nasser@example.com" required />
         </div>
         <div class="form-row">
           <label for="leadInterest">Interested In</label>

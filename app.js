@@ -9,7 +9,8 @@ const callHistoryBody = document.getElementById("callHistoryBody");
 
 const modalBackdrop = document.getElementById("modalBackdrop");
 const bookModal = document.getElementById("bookModal");
-const existingLeadModal = document.getElementById("existingLeadModal");
+const leadModalTitle = document.getElementById("leadModalTitle");
+const leadModalNote  = document.getElementById("leadModalNote");
 const createLeadModal = document.getElementById("createLeadModal");
 const smsModal = document.getElementById("smsModal");
 
@@ -464,19 +465,28 @@ salesOtherBtn.addEventListener("click", () => {
 isNewCustomerCheckbox.addEventListener("change", () => {
   state.isNewCustomer = isNewCustomerCheckbox.checked;
   if (state.isNewCustomer) {
-    showStatus("New customer mode enabled. Create Lead opens lead creation form.");
+    showStatus("New customer — all lead fields will start empty.");
   } else {
-    showStatus("Known customer mode enabled. Create Lead shows existing lead.");
+    showStatus("Existing customer — lead form will be pre-filled from CRM.");
   }
 });
 
 createLeadBtn.addEventListener("click", () => {
   resetLeadFlow();
   if (state.isNewCustomer) {
-    openModal(createLeadModal);
+    leadModalTitle.textContent = "Create New Lead";
+    leadModalNote.textContent  = "Fill in the customer details, then choose the lead outcome.";
+    document.getElementById("leadName").value  = "";
+    document.getElementById("leadPhone").value = "";
+    document.getElementById("leadEmail").value = "";
   } else {
-    openModal(existingLeadModal);
+    leadModalTitle.textContent = "Create Lead — Existing Customer";
+    leadModalNote.textContent  = "Customer details are pre-filled from the CRM. Review and choose the lead outcome.";
+    document.getElementById("leadName").value  = "Nasser Al Kuwari";
+    document.getElementById("leadPhone").value = "+974 5551 0082";
+    document.getElementById("leadEmail").value = "nasser.alku@example.com";
   }
+  openModal(createLeadModal);
 });
 
 convertBtn.addEventListener("click", () => {
