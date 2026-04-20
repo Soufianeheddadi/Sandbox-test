@@ -2,6 +2,10 @@ const branchButtons = document.querySelectorAll(".big-action");
 const servicePanel = document.getElementById("servicePanel");
 const salesPanel = document.getElementById("salesPanel");
 const statusBanner = document.getElementById("statusBanner");
+const detailTabs = document.querySelectorAll(".detail-tab");
+const customerDetailsPanel = document.getElementById("customerDetailsPanel");
+const callHistoryPanel = document.getElementById("callHistoryPanel");
+const callHistoryBody = document.getElementById("callHistoryBody");
 
 const modalBackdrop = document.getElementById("modalBackdrop");
 const bookModal = document.getElementById("bookModal");
@@ -60,6 +64,121 @@ const dailySlots = [
   "04:00 PM",
   "05:00 PM"
 ];
+
+const recentServicesBody = document.getElementById("recentServicesBody");
+const recentLeadsBody = document.getElementById("recentLeadsBody");
+
+const recentServices = [
+  { date: "14/04/2026", type: "40,000 KM Major Service", mileage: "41,820 KM", advisor: "Khalid Al Rashid", location: "Chevrolet Service – Al Sadd" },
+  { date: "08/01/2026", type: "Oil & Filter Change", mileage: "38,250 KM", advisor: "Omar Jaber", location: "Chevrolet Service – Al Sadd" },
+  { date: "22/09/2025", type: "Brake Inspection", mileage: "34,100 KM", advisor: "Nadia Al Farsi", location: "Chevrolet Service – D-Ring Road" },
+  { date: "05/05/2025", type: "AC Performance Check", mileage: "29,750 KM", advisor: "Khalid Al Rashid", location: "Chevrolet Service – Al Sadd" }
+];
+
+const recentLeads = [
+  { date: "17/04/2026", type: "Opportunity", model: "Chevrolet Traverse RS", stage: "Negotiation", rep: "Maya Hassan", outcome: "open" },
+  { date: "02/02/2026", type: "Lead", model: "Chevrolet Tahoe LT Z71", stage: "Contacted", rep: "Ali Mansoor", outcome: "won" },
+  { date: "15/10/2025", type: "Lead", model: "Chevrolet Silverado LTZ", stage: "Qualified", rep: "Maya Hassan", outcome: "lost" },
+  { date: "30/06/2025", type: "Opportunity", model: "Chevrolet Traverse RS", stage: "Closed Won", rep: "Sara Nasser", outcome: "won" }
+];
+
+function buildRecentServices() {
+  recentServicesBody.innerHTML = "";
+  recentServices.forEach((service) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${service.date}</td>
+      <td>${service.type}</td>
+      <td>${service.mileage}</td>
+      <td>${service.advisor}</td>
+      <td>${service.location}</td>
+    `;
+    recentServicesBody.appendChild(row);
+  });
+}
+
+function buildRecentLeads() {
+  recentLeadsBody.innerHTML = "";
+  recentLeads.forEach((lead) => {
+    const tagClass = lead.type === "Opportunity" ? "tag-opportunity" : "tag-lead";
+    const outcomeClass = { won: "tag-won", lost: "tag-lost", open: "tag-open" }[lead.outcome] || "tag-open";
+    const outcomeLabel = { won: "Won", lost: "Lost", open: "Open" }[lead.outcome] || lead.outcome;
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${lead.date}</td>
+      <td><span class="tag ${tagClass}">${lead.type}</span></td>
+      <td>${lead.model}</td>
+      <td>${lead.stage}</td>
+      <td>${lead.rep}</td>
+      <td><span class="tag ${outcomeClass}">${outcomeLabel}</span></td>
+    `;
+    recentLeadsBody.appendChild(row);
+  });
+}
+
+const callQueues = [
+  "Chevrolet Service Line",
+  "Chevrolet Sales Queue",
+  "Roadside Assistance",
+  "General Enquiries"
+];
+
+const callWrapUps = [
+  "Appointment Booked",
+  "Lead Created",
+  "Follow-Up Scheduled",
+  "Information Provided",
+  "No Answer on Callback",
+  "Unqualified"
+];
+
+const callTimes = [
+  "08:14 AM",
+  "09:42 AM",
+  "11:05 AM",
+  "01:33 PM",
+  "03:18 PM",
+  "04:52 PM",
+  "05:27 PM"
+];
+
+function selectInfoTab(tabName) {
+  detailTabs.forEach((tab) => {
+    tab.classList.toggle("active", tab.dataset.tab === tabName);
+  });
+
+  customerDetailsPanel.hidden = tabName !== "details";
+  callHistoryPanel.hidden = tabName !== "history";
+}
+
+function formatHistoryDate(date) {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+function buildCallHistoryRows() {
+  callHistoryBody.innerHTML = "";
+
+  for (let index = 0; index < 7; index += 1) {
+    const date = new Date();
+    date.setDate(date.getDate() - index);
+
+    const queue = callQueues[index % callQueues.length];
+    const wrapUp = callWrapUps[(index + 2) % callWrapUps.length];
+    const time = callTimes[index];
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${formatHistoryDate(date)}</td>
+      <td>${time}</td>
+      <td>${queue}</td>
+      <td>${wrapUp}</td>
+    `;
+    callHistoryBody.appendChild(row);
+  }
+}
 
 function showStatus(message, kind = "info") {
   statusBanner.hidden = false;
@@ -433,4 +552,15 @@ modalBackdrop.addEventListener("click", (event) => {
 });
 
 selectBranch("service");
+buildCallHistoryRows();
+buildRecentServices();
+buildRecentLeads();
+selectInfoTab("details");
+
+detailTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    selectInfoTab(tab.dataset.tab);
+  });
+});
+
 showStatus("Call received. Start in Service or switch to Sales.");

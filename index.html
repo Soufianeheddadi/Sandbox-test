@@ -20,31 +20,54 @@
         <h1>Customer Snapshot</h1>
       </div>
       <div class="badge">Queue: Chevrolet Service Line</div>
-      <section class="customer-grid">
-        <article>
-          <p class="label">Customer Name</p>
-          <p class="value" id="custName">Nasser Al Kuwari</p>
-        </article>
-        <article>
-          <p class="label">Number</p>
-          <p class="value" id="custNumber">+974 5551 0082</p>
-        </article>
-        <article>
-          <p class="label">VIN</p>
-          <p class="value" id="custVin">1GNSKPKD8PR281445</p>
-        </article>
-        <article>
-          <p class="label">Plate Number</p>
-          <p class="value" id="custPlate">QTR-76214</p>
-        </article>
-        <article>
-          <p class="label">Car</p>
-          <p class="value" id="custCar">Chevrolet Tahoe</p>
-        </article>
-        <article>
-          <p class="label">Car Model</p>
-          <p class="value" id="custModel">2024 LT Z71</p>
-        </article>
+      <div class="detail-tabs" role="tablist" aria-label="Customer information tabs">
+        <button class="detail-tab active" id="customerDetailsTab" type="button" data-tab="details">Customer Details</button>
+        <button class="detail-tab" id="callHistoryTab" type="button" data-tab="history">Call History (Last 7 Days)</button>
+      </div>
+
+      <section class="detail-panel" id="customerDetailsPanel">
+        <section class="customer-grid">
+          <article>
+            <p class="label">Customer Name</p>
+            <p class="value" id="custName">Nasser Al Kuwari</p>
+          </article>
+          <article>
+            <p class="label">Number</p>
+            <p class="value" id="custNumber">+974 5551 0082</p>
+          </article>
+          <article>
+            <p class="label">VIN</p>
+            <p class="value" id="custVin">1GNSKPKD8PR281445</p>
+          </article>
+          <article>
+            <p class="label">Plate Number</p>
+            <p class="value" id="custPlate">QTR-76214</p>
+          </article>
+          <article>
+            <p class="label">Car</p>
+            <p class="value" id="custCar">Chevrolet Tahoe</p>
+          </article>
+          <article>
+            <p class="label">Car Model</p>
+            <p class="value" id="custModel">2024 LT Z71</p>
+          </article>
+        </section>
+      </section>
+
+      <section class="detail-panel" id="callHistoryPanel" hidden>
+        <div class="history-table-wrap">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Queue</th>
+                <th>Wrap-Up</th>
+              </tr>
+            </thead>
+            <tbody id="callHistoryBody"></tbody>
+          </table>
+        </div>
       </section>
     </header>
 
@@ -61,6 +84,23 @@
         <button class="action-btn" id="bookAppointmentBtn">Book Appointment</button>
         <button class="action-btn ghost" id="serviceOtherBtn">Other</button>
       </div>
+      <div class="history-subsection">
+        <p class="subsection-title">Recent Services</p>
+        <div class="history-table-wrap">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Service Type</th>
+                <th>Mileage</th>
+                <th>Advisor</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody id="recentServicesBody"></tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
     <section class="panel" id="salesPanel" hidden>
@@ -74,6 +114,24 @@
       <div class="panel-actions">
         <button class="action-btn" id="createLeadBtn">Create Lead</button>
         <button class="action-btn ghost" id="salesOtherBtn">Other</button>
+      </div>
+      <div class="history-subsection">
+        <p class="subsection-title">Recent Leads &amp; Opportunities</p>
+        <div class="history-table-wrap">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Model</th>
+                <th>Stage</th>
+                <th>Sales Rep</th>
+                <th>Outcome</th>
+              </tr>
+            </thead>
+            <tbody id="recentLeadsBody"></tbody>
+          </table>
+        </div>
       </div>
     </section>
 
