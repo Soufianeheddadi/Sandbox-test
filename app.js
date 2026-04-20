@@ -623,7 +623,11 @@ const chatResponses = [
   },
   {
     keywords: ["service", "appointment", "book", "schedule", "visit"],
-    reply: "Vehicle is overdue for the 40,000 KM major service (current: 41,820 KM). Morning slots available this week at Al Sadd branch. Preferred advisor: Khalid Al Rashid."
+    reply: "Vehicle is overdue for the 40,000 KM major service (current: 41,820 KM). Example branch options: Airport Quick Service (Zone 47, Street 310, Building 338) and Industrial Area Service Centre (Zone 57, Street 24, Building 19). Both can be reached on 8000100."
+  },
+  {
+    keywords: ["location", "locations", "where", "address", "timing", "timings", "hours", "open", "close", "showroom", "service center", "service centre"],
+    reply: "Example public info for Al Manai/Jaidah Chevrolet Qatar: Showroom: Jaidah Square Showroom, Al Matar Street, Umm Ghuwailina, Doha (Sales 8000100), hours Sun-Thu & Sat 08:30-21:00, Fri closed. Service: Industrial Area Service Centre, Zone 57 Street 24 Building 19, Doha (Service 8000100), hours Sun-Thu & Sat 07:30-12:00 and 13:00-16:30, Fri closed. Quick Service: Airport Quick Service, Zone 47 Street 310 Building 338, Doha, hours Sun-Thu & Sat 08:00-18:00, Fri closed."
   },
   {
     keywords: ["lead", "opportunity", "sales", "traverse", "test drive"],
