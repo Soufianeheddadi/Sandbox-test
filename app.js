@@ -611,47 +611,47 @@ const copilotInsights = [
 const chatResponses = [
   {
     keywords: ["warrant"],
-    reply: "2024 Chevrolet Tahoe LT Z71 is covered under the standard 3-year / 60,000 KM bumper-to-bumper warranty. Estimated expiry: March 2027 or 60,000 KM — whichever comes first."
+    reply: "Great news, this Tahoe is still under warranty. It has the standard 3-year or 60,000 KM coverage, so the customer is protected until around March 2027, or until the mileage limit is reached."
   },
   {
     keywords: ["recall"],
-    reply: "No open safety recalls on file for VIN 1GNSKPKD8PR281445 as of today (20 April 2026)."
+    reply: "I checked the record and there are no open safety recalls on this vehicle right now."
   },
   {
     keywords: ["upsell", "offer", "promo", "promotion", "package", "bundle"],
-    reply: "Top upsell opportunities: Brake Fluid Flush + Cabin Air Filter bundle (QAR 450) due at 40K service. Also eligible for Summer Ready AC package (15% off, expires 30 Apr). Recommend Khalid Al Rashid as advisor."
+    reply: "A strong upsell option is the Brake Fluid Flush plus Cabin Air Filter bundle for QAR 450 during the 40K service. You can also offer the Summer Ready AC package with 15% off. This combination feels valuable and relevant for the customer."
   },
   {
     keywords: ["service", "appointment", "book", "schedule", "visit"],
-    reply: "Vehicle is overdue for the 40,000 KM major service (current: 41,820 KM). Example branch options: Airport Quick Service (Zone 47, Street 310, Building 338) and Industrial Area Service Centre (Zone 57, Street 24, Building 19). Both can be reached on 8000100."
+    reply: "This vehicle is already due for its 40,000 KM major service, currently at 41,820 KM. I recommend offering the customer the next available morning slot and confirming their preferred branch before finalizing the booking."
   },
   {
     keywords: ["location", "locations", "where", "address", "timing", "timings", "hours", "open", "close", "showroom", "service center", "service centre"],
-    reply: "Example public info for Al Manai/Jaidah Chevrolet Qatar: Showroom: Jaidah Square Showroom, Al Matar Street, Umm Ghuwailina, Doha (Sales 8000100), hours Sun-Thu & Sat 08:30-21:00, Fri closed. Service: Industrial Area Service Centre, Zone 57 Street 24 Building 19, Doha (Service 8000100), hours Sun-Thu & Sat 07:30-12:00 and 13:00-16:30, Fri closed. Quick Service: Airport Quick Service, Zone 47 Street 310 Building 338, Doha, hours Sun-Thu & Sat 08:00-18:00, Fri closed."
+    reply: "Sure, here is a clean summary you can share: Showroom: Jaidah Square, Al Matar Street, Umm Ghuwailina, open 08:30 AM to 09:00 PM, Saturday to Thursday. Industrial Service Centre: Zone 57, Street 24, open 07:30 AM to 12:00 PM and 01:00 PM to 04:30 PM, Saturday to Thursday. Airport Quick Service: Zone 47, Street 310, open 08:00 AM to 06:00 PM, Saturday to Thursday. Friday is closed for all three in this demo."
   },
   {
     keywords: ["lead", "opportunity", "sales", "traverse", "test drive"],
-    reply: "Open Traverse RS opportunity is in Negotiation stage with Maya Hassan. Customer showed strong interest in the RS trim. Recommend scheduling a test drive — ideally combined with the 40K service visit."
+    reply: "There is an active Traverse RS opportunity in Negotiation. The customer is already warm, so the best next step is to propose a test drive and align it with their service visit for convenience."
   },
   {
     keywords: ["customer", "profile", "history", "loyal", "gold"],
-    reply: "Nasser Al Kuwari — Gold tier customer since 2021. 3 registered vehicles, 6 service visits total. Average spend: QAR 12,400/year. Preferred contact method: Phone. Preferred time: Morning."
+    reply: "This is a loyal Gold-tier customer with a solid service history and consistent yearly spend. They usually prefer phone communication and morning appointments, so a proactive and premium tone works best."
   },
   {
     keywords: ["mileage", "km", "odometer", "kilometer"],
-    reply: "Last recorded mileage: 41,820 KM on 14 April 2026 (last service visit). The vehicle is overdue for the scheduled 40K major service."
+    reply: "Latest recorded mileage is 41,820 KM, which means the 40K major service is overdue. This is a good opportunity to position immediate booking as preventive care."
   },
   {
     keywords: ["ac", "air", "cool", "summer"],
-    reply: "Customer's AC performance was checked on 22/09/2025 at 34,100 KM. The Summer Ready AC package (QAR 320 after 15% promo discount) covers a full AC service + refrigerant top-up + cabin filter. Offer expires 30 April 2026."
+    reply: "The AC package is a great fit for this call. You can present it as a comfort and reliability upgrade, especially before summer travel, and pair it with the major service to save the customer an extra visit."
   },
   {
     keywords: ["advisor", "who", "assign", "contact"],
-    reply: "Customer's preferred service advisor is Khalid Al Rashid (Al Sadd branch). For sales, Maya Hassan is the assigned rep handling the open Traverse RS opportunity."
+    reply: "For service, assign Khalid Al Rashid as the preferred advisor. For sales follow-up, Maya Hassan is the right owner for the open opportunity."
   }
 ];
 
-const defaultCopilotReply = "I'm cross-referencing the CRM and vehicle records. Could you be more specific? You can also use the quick-action buttons above.";
+const defaultCopilotReply = "I can help with service booking, branch timings, warranty, recalls, upsell ideas, and sales opportunities. Ask me in one line and I will draft a ready-to-use reply.";
 
 let copilotOpen   = false;
 let feedStarted   = false;
